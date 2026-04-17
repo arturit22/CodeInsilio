@@ -4,38 +4,23 @@
     import { Header } from "@/widgets/header/ui/Header"
     import { useState } from "react"
     import type { Issue } from "@/entities/issue/model/types"
+    import type { Status } from "@/entities/analysis-result/model/types"
+    import { runCodeAnalysis } from "@/features/run-code-analysis/model/run-code-analysis"
 
     export const HomePage = () => {
 
         const [code, setCode] = useState<string>('')
-        const [status, setStatus] = useState<"idle" | "loading" | "success">('idle')
+        const [status, setStatus] = useState<Status>('idle')
         const [result, setResult] = useState<Issue[]>([])
 
+        
         const onStartAnalyze = () => {
             setResult([])
-            setStatus("loading")
-            let issue: Issue[] = []
+            setStatus('loading')
             setTimeout(() => {
-                if (code.includes('any')) {
-                setStatus("success")
-                issue = [{
-                    id: 1,
-                    title: 'Avoid using any',
-                    description: 'use a more specific type instead of any',
-                    severity: "medium",
-                    suggestion: 'enter another type',
-                    line: 15,
-                    rule: 'avoid any',
-                }]
-                } else {
-                    issue = []
-                    setStatus('success')
-                }
-                setResult(issue)
-            
-                
+                setResult(runCodeAnalysis(code))
+                setStatus('success')
             }, 1000)
-            
         }
 
         const onChange = (newCode: string) => {

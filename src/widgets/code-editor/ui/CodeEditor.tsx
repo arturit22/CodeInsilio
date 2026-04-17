@@ -1,15 +1,14 @@
 
 interface CodeEditorProps {
     code: string,
-    onChange: () => void,
+    onChange: (value: string) => void,
 }
 
 export const CodeEditor = ({code, onChange}: CodeEditorProps) => {
     
     return (
         <div>
-            <textarea placeholder="Paste your code here..." name="" id=""></textarea>
-            <button onChange={() => onChange}>Analyze new code</button>
+            <textarea placeholder="Paste your code here..." value={code} onChange={(e) => onChange(e.target.value)} name="" id=""></textarea>
         </div>
     )
 }
