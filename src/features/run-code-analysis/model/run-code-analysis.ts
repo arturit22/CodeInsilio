@@ -1,11 +1,15 @@
 import type { Issue } from "@/entities/issue/model/types";
-import { noAny } from "../rules/no-any";
+import { rules } from "./rules";
 
 export const runCodeAnalysis = (code: string): Issue[] => {
+    const issues: Issue[] = []
 
-    if (!noAny(code)) {
-        return noAny(code)
-    }
+    rules.forEach(rule => {
+        const issue = rule(code)
 
-    
+        if (issue) {
+            issues.push(issue)
+        }
+    });
+    return issues
 }

@@ -12,6 +12,7 @@
         const [code, setCode] = useState<string>('')
         const [status, setStatus] = useState<Status>('idle')
         const [result, setResult] = useState<Issue[]>([])
+        const [selectedIssueId, setSelectedIssueId] = useState<number | null>(null)
 
         
         const onStartAnalyze = () => {
@@ -40,7 +41,7 @@
                     </section>
 
                     <section>
-                        <AnalysisResult issues={result} status={status} />
+                        <AnalysisResult issues={result} status={status} selectedIssueId={selectedIssueId} onSelectIssue={setSelectedIssueId} />
                     </section>
                 </main>
             </div>
