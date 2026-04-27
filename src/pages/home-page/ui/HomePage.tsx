@@ -14,6 +14,7 @@
         const [result, setResult] = useState<Issue[]>([])
         const [selectedIssueId, setSelectedIssueId] = useState<number | null>(null)
 
+        const selectedIssue = result.find(issue => issue.id === selectedIssueId) ?? null
         
         const onStartAnalyze = () => {
             setResult([])
@@ -21,6 +22,7 @@
             setTimeout(() => {
                 setResult(runCodeAnalysis(code))
                 setStatus('success')
+                setSelectedIssueId(null)
             }, 1000)
         }
 
@@ -36,7 +38,7 @@
 
                 <main>
                     <section>
-                        <CodeEditor onChange={onChange} code={code} />
+                        <CodeEditor onChange={onChange} code={code} selectedIssueId={selectedIssue?.line ?? null} issues={result} />
                         <AnalysisPanel onAnalyze={onStartAnalyze} status={status} />
                     </section>
 
