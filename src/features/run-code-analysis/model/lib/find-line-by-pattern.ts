@@ -1,9 +1,16 @@
-export const findLineByPattern = (code: string ,pattern: string): number | null => {
+export const findLineByPattern = (code: string, pattern: string): { line: number; startColumn: number; endColumn: number } | null => {
     const lines = code.split('\n');
-    const index = lines.findIndex(line => line.includes(pattern));
 
-    if (index !== -1) {
-        return index + 1
+    for (let i = 0; i < lines.length; i++) {
+        const index = lines[i].indexOf(pattern)
+
+        if (index !== -1) {
+            return {
+                line: i + 1,
+                startColumn: index + 1,
+                endColumn: index + 1 + pattern.length,
+            }
+        }
     }
     return null
 }

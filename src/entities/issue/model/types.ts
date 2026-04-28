@@ -6,5 +6,7 @@ export interface Issue {
     severity: "low" | "medium" | "high",
     suggestion: string,
     line: number,
+    startColumn: number,
+    endColumn: number,
     rule: string,
 }

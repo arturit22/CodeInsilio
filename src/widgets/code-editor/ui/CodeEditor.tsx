@@ -28,9 +28,8 @@ export const CodeEditor = ({ code, onChange, selectedIssueId, issues }: CodeEdit
         }
 
         const decorations = issues.map((issue) => ({
-            range: new monaco.Range(issue.line, 1, issue.line, 1),
+            range: new monaco.Range(issue.line, issue.startColumn, issue.line, issue.endColumn),
             options: {
-                isWholeLine: true,
                 className: selectedIssueId === issue.id ? "selectedIssueLine" : "issueLine",
             },
         }))
